@@ -1,6 +1,6 @@
 'use strict';
 
-const itemService = require('../services/item.service');
+const itemsService = require('../services/items.service')();
 
 module.exports = itemController;
 
@@ -14,7 +14,7 @@ function itemController() {
     };
 
     function getAll(req, res) {
-        itemService.getAll()
+        itemsService.getAll()
             .then((items) => {
                return res.json(items); 
             })
@@ -24,7 +24,7 @@ function itemController() {
     }
 
     function get(req, res) {
-        itemService.get(req.params.id)
+        itemsService.get(req.params.id)
             .then((item) => {
                 return res.json(item);
             })
@@ -34,7 +34,7 @@ function itemController() {
     }
 
     function insert(req, res) {
-        itemService.insert(req.body)
+        itemsService.insert(req.body)
             .then((response) => {
                 return res.status(201).json(response);
             })
@@ -44,7 +44,7 @@ function itemController() {
     }
 
     function update(req, res) {
-        itemService.update(req.params.id, req.body)
+        itemsService.update(req.params.id, req.body)
             .then((response) => {
                 return res.json(response);
             })
@@ -54,7 +54,7 @@ function itemController() {
     }
 
     function remove(req, res) {
-        itemService.remove(req.params.id)
+        itemsService.remove(req.params.id)
             .then((response) => {
                 return res.json(response);
             })

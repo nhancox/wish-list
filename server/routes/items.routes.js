@@ -2,15 +2,15 @@
 
 const router = require('express').Router();
 
-const itemController = require('../controllers/item.controller')();
+const itemsController = require('../controllers/items.controller')();
 
 module.exports = router;
 
-router.get('/', itemController.getAll);
-router.get('/:id', itemController.get);
+router.get('/', itemsController.getAll);
+router.get('/:id', itemsController.get);
 
-router.post('/', itemController.insert);
+router.post('/', itemsController.insert);
 
-router.put('/:id', itemController.update);
+router.put('/:id', itemsController.update);
 
-router.delete('/:id', itemController.remove);
+router.delete('/:id', itemsController.remove);

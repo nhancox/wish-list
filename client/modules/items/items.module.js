@@ -8,11 +8,22 @@
     function RouteConfig($locationProvider, $routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: '',
+                templateUrl: 'client/modules/items/views/items.html',
                 controller: 'ItemController',
                 resolve: {
-                    
+                    items: getAllItems
                 }
+            });
+    }
+
+    getAllItems.$inject = ['itemsService'];
+    function getAllItems(itemsService) {
+        itemsService.getAll()
+            .then((items) => {
+                return items;
             })
+            .catch((error) => {
+                console.log(`Error: ${error}`);
+            });
     }
 })();

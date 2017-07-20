@@ -1,5 +1,5 @@
 'use strict'
 
 $(function() {
-    angular.boostrap(document, ['wish-list']);
+    angular.bootstrap(document, ['wish-list']);
 })

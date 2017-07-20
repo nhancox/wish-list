@@ -15,7 +15,9 @@ const mongoConnection = process.env.MONGODB_URL;
 const port = process.env.PORT;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(mongoConnection);
+mongoose.connect(mongoConnection, {
+    useMongoClient: true
+});
 process.on('SIGINT', () => {
     mongoose.connection.close(() => {
         console.log('Mongoose default connection disconnected through app termination');
@@ -34,6 +36,11 @@ app.use(bodyParser.urlencoded({
 app.use(expressValidator());
 app.use(methodOverride('X-HTTP-Method-Override'));
 
+app.use(require('./server/config/static.files'));
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.sendStatus(404);
+})
 
 app.use(require('./server/routes'));
 

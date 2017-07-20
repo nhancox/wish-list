@@ -4,8 +4,10 @@
     angular.module('wish-list.items')
         .controller('ItemController', ItemController);
 
-    ItemController.$inject = []
-    function ItemController() {
-        
+    ItemController.$inject = ['items']
+    function ItemController(items) {
+        let $ctrl = this;
+
+        $ctrl.items = items;
     }
 })();

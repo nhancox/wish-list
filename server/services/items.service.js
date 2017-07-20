@@ -2,9 +2,9 @@
 
 const Item = require('../models/item');
 
-module.exports = itemService;
+module.exports = itemsService;
 
-function itemService() {
+function itemsService() {
     return {
         getAll: getAll,
         get: get,

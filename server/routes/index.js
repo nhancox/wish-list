@@ -2,7 +2,7 @@
 
 const router = require('express').Router();
 
-const itemRoutes = require('./agency.routes');
+const itemRoutes = require('./items.routes');
 
 const sitesRoutes = require('./sites.routes');
 
@@ -15,8 +15,6 @@ router.use('/api/*', (req, res, next) => {
 router.use(sitesRoutes);
 
 router.use((err, req, res, next) => {
-    if (!err) {return next();}
-
     console.error(err.stack);
 
     res.sendStatus(500);
