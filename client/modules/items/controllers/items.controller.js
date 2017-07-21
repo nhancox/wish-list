@@ -2,12 +2,12 @@
     'use strict';
 
     angular.module('wish-list.items')
-        .controller('ItemController', ItemController);
+        .controller('ItemsController', ItemsController);
 
-    ItemController.$inject = ['items']
-    function ItemController(items) {
+    ItemsController.$inject = ['items']
+    function ItemsController(items) {
         let $ctrl = this;
-
+        debugger
         $ctrl.items = items;
     }
 })();

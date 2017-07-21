@@ -7,5 +7,10 @@ module.exports = {
         res.sendFile('index.html', {
             root: 'client/modules/index/views'
         });
+    },
+    html: (req, res, next) => {
+        res.sendFile('items.html', {
+            root: 'client/modules/items/views'
+        });
     }
 }

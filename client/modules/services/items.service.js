@@ -2,10 +2,10 @@
     'use strict';
 
     angular.module('wish-list.services')
-        .factory('itemService', itemService);
+        .factory('itemsService', itemsService);
 
-    itemService.$inject = ['$http'];
-    function itemService($http) {
+    itemsService.$inject = ['$http'];
+    function itemsService($http) {
         'use strict';
 
         return {

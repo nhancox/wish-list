@@ -4,7 +4,6 @@
     angular.module('wish-list', [
         'ngRoute',
 
-        /* 'wish-list.index', */
         'wish-list.items',
         'wish-list.services'
     ])
@@ -12,9 +11,14 @@
 
     RouteConfig.$inject = ['$locationProvider', '$routeProvider'];
     function RouteConfig($locationProvider, $routeProvider) {
-        $locationProvider.html5mode(true);
-        $routeProvider.otherwise({
-            redirectTo: '/'
-        });
+        
+         $routeProvider
+            .when('/home', {
+                templateUrl: 'client/modules/index/views/index.html',
+            }) 
+             .otherwise({
+                redirectTo: '/'
+            }); 
+        $locationProvider.html5Mode(true);
     }
 })();
