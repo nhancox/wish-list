@@ -7,39 +7,50 @@
     'use strict'
 
     angular.module('wish-list', [
-        'ngRoute',
-
+        'wish-list.index',
         'wish-list.items',
         'wish-list.services'
     ])
         .config(RouteConfig);
 
-    RouteConfig.$inject = ['$locationProvider', '$routeProvider'];
-    function RouteConfig($locationProvider, $routeProvider) {
-        
-         $routeProvider
-            .when('/home', {
-                templateUrl: 'client/modules/index/views/index.html',
-            }) 
-             .otherwise({
-                redirectTo: '/'
-            }); 
+    RouteConfig.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
+    function RouteConfig($locationProvider, $stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/');
         $locationProvider.html5Mode(true);
     }
 })();
 (function() {
     'use strict';
 
-    angular.module('wish-list.items', [])
+    angular.module('wish-list.index', [
+        'ui.router'
+    ])
         .config(RouteConfig);
 
-    RouteConfig.$inject = ['$locationProvider', '$routeProvider'];
-    function RouteConfig($locationProvider, $routeProvider) {
-        $routeProvider
-            .when('/list', {
-                templateUrl: '/client/modules/items/views/items.html',
-                controller: 'ItemsController',
-                controllerAs: '$ctrl',
+    RouteConfig.$inject = ['$stateProvider'];
+    function RouteConfig($stateProvider) {
+        $stateProvider
+            .state('wish-list', {
+                abstract: true,
+                templateUrl: 'client/modules/index/views/index.html'
+            })
+    }
+})();
+(function() {
+    'use strict';
+
+    angular.module('wish-list.items', [
+        'ui.router'
+    ])
+        .config(RouteConfig);
+
+    RouteConfig.$inject = ['$stateProvider'];
+    function RouteConfig($stateProvider) {
+        $stateProvider
+            .state('wish-list.items', {
+                url: '/',
+                templateUrl: 'client/modules/items/views/items.html',
+                controller: 'ItemsController as $ctrl',
                 resolve: {
                     items: getAllItems
                 }

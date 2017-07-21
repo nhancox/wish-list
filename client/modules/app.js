@@ -2,23 +2,15 @@
     'use strict'
 
     angular.module('wish-list', [
-        'ngRoute',
-
+        'wish-list.index',
         'wish-list.items',
         'wish-list.services'
     ])
         .config(RouteConfig);
 
-    RouteConfig.$inject = ['$locationProvider', '$routeProvider'];
-    function RouteConfig($locationProvider, $routeProvider) {
-        
-         $routeProvider
-            .when('/home', {
-                templateUrl: 'client/modules/index/views/index.html',
-            }) 
-             .otherwise({
-                redirectTo: '/'
-            }); 
+    RouteConfig.$inject = ['$locationProvider', '$stateProvider', '$urlRouterProvider'];
+    function RouteConfig($locationProvider, $stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/');
         $locationProvider.html5Mode(true);
     }
 })();

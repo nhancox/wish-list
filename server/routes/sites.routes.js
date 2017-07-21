@@ -6,5 +6,5 @@ const sitesController = require('../controllers/sites.controller');
 
 module.exports = router;
 
-router.get('/client/*', sitesController.html);
-router.get('/*', sitesController.default);
+router.get('/', sitesController.index);
+router.get('/client/modules/^(?!.*index).*$/views/*', sitesController.html)
