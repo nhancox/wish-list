@@ -21,9 +21,8 @@
 
     getAllItems.$inject = ['itemsService'];
     function getAllItems(itemsService) {
-        itemsService.getAll()
+        return itemsService.getAll()
             .then((items) => {
-                debugger
                 return items;
             })
             .catch((error) => {

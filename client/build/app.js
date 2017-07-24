@@ -41,9 +41,8 @@
 
     getAllItems.$inject = ['itemsService'];
     function getAllItems(itemsService) {
-        itemsService.getAll()
+        return itemsService.getAll()
             .then((items) => {
-                debugger
                 return items;
             })
             .catch((error) => {
@@ -122,7 +121,7 @@
     ItemsController.$inject = ['items']
     function ItemsController(items) {
         let $ctrl = this;
-        debugger
+        
         $ctrl.test = 'test';
         $ctrl.items = items;
     }
