@@ -44,7 +44,11 @@ function itemController() {
     }
 
     function update(req, res) {
-        itemsService.update(req.params.id, req.body)
+        let query = {
+            _id: req.params.id
+        };
+        
+        itemsService.update(query, req.body)
             .then((response) => {
                 return res.json(response);
             })
@@ -54,7 +58,11 @@ function itemController() {
     }
 
     function remove(req, res) {
-        itemsService.remove(req.params.id)
+        let query = {
+            _id: req.params.id
+        };
+        
+        itemsService.remove(query)
             .then((response) => {
                 return res.json(response);
             })
