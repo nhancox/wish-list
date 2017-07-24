@@ -6,6 +6,6 @@ Using a local MongoDB instance and a RESTful API combined with an Angular front-
 
 On page load, your wish list appears. You are able to add, edit or delete items with the (required) name and (optional) notes fields. The input forms utilize Angular validation.
 
-To better expose project structure and coding practices, the Gulp and .env files have been exposed in the repo — only the compiled build files are in gitignore.
+To better expose project structure and coding practices, the Gulp and .env files have been exposed in the repo — only the node_module and compiled build files are in gitignore.
 
 All technologies used: HTML5, Bootstrap 3, Angular, UI-Router, JavaScript, Express, Node.js, Mongoose, MongoDB, Gulp.
