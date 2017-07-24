@@ -1,2 +1,5 @@
 # Build Files
 client/build/**
+
+# Node Modules
+node_modules
