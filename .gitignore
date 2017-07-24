@@ -3,3 +3,6 @@ client/build/**
 
 # Node Modules
 node_modules
+
+# VS Code
+.vscode
