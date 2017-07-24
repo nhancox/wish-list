@@ -2,7 +2,6 @@
     'use strict'
 
     angular.module('wish-list', [
-        'wish-list.index',
         'wish-list.items',
         'wish-list.services'
     ])

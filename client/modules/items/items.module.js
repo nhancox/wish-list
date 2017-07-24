@@ -9,7 +9,7 @@
     RouteConfig.$inject = ['$stateProvider'];
     function RouteConfig($stateProvider) {
         $stateProvider
-            .state('wish-list.items', {
+            .state('wish-list', {
                 url: '/',
                 templateUrl: 'client/modules/items/views/items.html',
                 controller: 'ItemsController as $ctrl',
@@ -23,6 +23,7 @@
     function getAllItems(itemsService) {
         itemsService.getAll()
             .then((items) => {
+                debugger
                 return items;
             })
             .catch((error) => {

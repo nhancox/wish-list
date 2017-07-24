@@ -7,7 +7,6 @@
     'use strict'
 
     angular.module('wish-list', [
-        'wish-list.index',
         'wish-list.items',
         'wish-list.services'
     ])
@@ -22,23 +21,6 @@
 (function() {
     'use strict';
 
-    angular.module('wish-list.index', [
-        'ui.router'
-    ])
-        .config(RouteConfig);
-
-    RouteConfig.$inject = ['$stateProvider'];
-    function RouteConfig($stateProvider) {
-        $stateProvider
-            .state('wish-list', {
-                abstract: true,
-                templateUrl: 'client/modules/index/views/index.html'
-            })
-    }
-})();
-(function() {
-    'use strict';
-
     angular.module('wish-list.items', [
         'ui.router'
     ])
@@ -47,7 +29,7 @@
     RouteConfig.$inject = ['$stateProvider'];
     function RouteConfig($stateProvider) {
         $stateProvider
-            .state('wish-list.items', {
+            .state('wish-list', {
                 url: '/',
                 templateUrl: 'client/modules/items/views/items.html',
                 controller: 'ItemsController as $ctrl',
@@ -61,6 +43,7 @@
     function getAllItems(itemsService) {
         itemsService.getAll()
             .then((items) => {
+                debugger
                 return items;
             })
             .catch((error) => {
@@ -140,6 +123,7 @@
     function ItemsController(items) {
         let $ctrl = this;
         debugger
+        $ctrl.test = 'test';
         $ctrl.items = items;
     }
 })();

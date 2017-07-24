@@ -1,7 +1,13 @@
 const express = require('express');
 const app = express();
 
+const path = require('path');
+
 module.exports = app;
+
+app.use('/client', express.static(path.join(__dirname, '../../client'), {
+    fallthrough: false
+}))
 
 app.use('/bootstrap-css', express.static('node_modules/bootstrap/dist/css/bootstrap.min.css', {
     fallthrough: false

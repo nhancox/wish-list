@@ -8,6 +8,7 @@
     function ItemsController(items) {
         let $ctrl = this;
         debugger
+        $ctrl.test = 'test';
         $ctrl.items = items;
     }
 })();
