@@ -14,7 +14,7 @@
     <div class="col-xs-12 col-md-6">
         <ul ng-repeat="item in $ctrl.items">
             <li>{{item.name}} <button class="btn btn-info btn-xs" ng-click="$ctrl.editItem = !$ctrl.editItem; $ctrl.putForm = item; $ctrl.addItem = false;">Edit</button> <button class="btn btn-danger btn-xs" ng-click="$ctrl.removeItem(item._id)">Delete</button></li>
-            <ul>
+            <ul ng-if="item.notes">
                 <li>{{item.notes}}</li>
             </ul>
         </ul>
