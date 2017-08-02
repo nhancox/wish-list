@@ -16,30 +16,30 @@ function itemsController() {
     function getAll(req, res) {
         itemsService.getAll()
             .then((items) => {
-               return res.json(items); 
+                res.json(items); 
             })
             .catch((err) => {
-                return res.status(500).send(err);
+                res.status(500).send(err);
             });
     }
 
     function get(req, res) {
         itemsService.get(req.params.id)
             .then((item) => {
-                return res.json(item);
+                res.json(item);
             })
             .catch((err) => {
-                return res.status(500).send(err);
+                res.status(500).send(err);
             });
     }
 
     function insert(req, res) {
         itemsService.insert(req.body)
             .then((response) => {
-                return res.status(201).json(response);
+                res.status(201).json(response);
             })
             .catch((err) => {
-                return res.status(500).send(err);
+                res.status(500).send(err);
             });
     }
 
@@ -50,10 +50,10 @@ function itemsController() {
         
         itemsService.update(query, req.body)
             .then((response) => {
-                return res.json(response);
+                res.json(response);
             })
             .catch((err) => {
-                return res.status(500).send(err);
+                res.status(500).send(err);
             });
     }
 
@@ -64,10 +64,10 @@ function itemsController() {
         
         itemsService.remove(query)
             .then((response) => {
-                return res.json(response);
+                res.json(response);
             })
             .catch((err) => {
-                return res.status(500).send(err);
+                res.status(500).send(err);
             });
     }
 }
