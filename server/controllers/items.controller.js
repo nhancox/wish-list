@@ -2,9 +2,9 @@
 
 const itemsService = require('../services/items.service')();
 
-module.exports = itemController;
+module.exports = itemsController;
 
-function itemController() {
+function itemsController() {
     return {
         getAll: getAll,
         get: get,

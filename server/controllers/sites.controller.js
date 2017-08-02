@@ -2,8 +2,14 @@
 
 const path = require('path');
 
-module.exports = {
-    index: (req, res, next) => {
+module.exports = sitesController;
+
+function sitesController() {
+    return {
+        index: index
+    };
+
+    function index(req, res, next) {
         res.sendFile('client/modules/index/views/index.html', {
             root: path.join(__dirname, '../..')
         });

@@ -6,6 +6,8 @@ const itemRoutes = require('./items.routes');
 
 const sitesRoutes = require('./sites.routes');
 
+module.exports = router;
+
 router.use('/api/items', itemRoutes);
 
 router.use('/api/*', (req, res, next) => {
@@ -19,5 +21,3 @@ router.use((err, req, res, next) => {
 
     res.sendStatus(500);
 });
-
-module.exports = router;
