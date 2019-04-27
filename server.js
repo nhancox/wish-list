@@ -1,16 +1,14 @@
 'use strict';
 
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const expressValidator = require('express-validator');
-const methodOverride = require('method-override');
 const mongoose = require('mongoose');
-const validator = require('validator');
 
-require('dotenv').config();
 const mongoConnection = process.env.MONGODB_URL;
 const port = process.env.PORT;
 
@@ -33,8 +31,6 @@ app.use(bodyParser.json({
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-app.use(expressValidator());
-app.use(methodOverride('X-HTTP-Method-Override'));
 
 app.use(require('./server/config/static.files'));
 app.use((err, req, res, next) => {
