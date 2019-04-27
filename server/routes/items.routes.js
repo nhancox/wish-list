@@ -1,16 +1,16 @@
-'use strict';
+"use strict";
 
-const router = require('express').Router();
+const router = require("express").Router();
 
-const itemsController = require('../controllers/items.controller')();
+const itemsController = require("../controllers/items.controller")();
 
 module.exports = router;
 
-router.get('/', itemsController.getAll);
-router.get('/:id', itemsController.get);
+router.get("/", itemsController.getAll);
+router.get("/:id", itemsController.get);
 
-router.post('/', itemsController.insert);
+router.post("/", itemsController.insert);
 
-router.put('/:id', itemsController.update);
+router.put("/:id", itemsController.update);
 
-router.delete('/:id', itemsController.remove);
+router.delete("/:id", itemsController.remove);

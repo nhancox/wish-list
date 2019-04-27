@@ -1,5 +1,5 @@
 (function() {
-    'use strict';
-    
-    angular.bootstrap(document, ['wish-list']);
+	"use strict";
+
+	angular.bootstrap(document, ["wish-list"]);
 });

@@ -6,6 +6,9 @@ module.exports = {
 		node: true
 	},
 	extends: ["eslint:recommended", "plugin:prettier/recommended"],
+	globals: {
+		angular: "readonly"
+	},
 	parserOptions: {
 		ecmaVersion: 8,
 		parser: "babel-eslint"

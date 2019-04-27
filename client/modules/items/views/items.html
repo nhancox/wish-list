@@ -1,50 +1,148 @@
 <div class="row">
     <h1>Wish List</h1>
-    <h6>Items in wish list: {{$ctrl.items.length}}</h6>
+    <h6>Items in wish list: {{ $ctrl.items.length }}</h6>
 </div>
 
 <div class="row">
-    <p ng-show="$ctrl.addItem && addItemForm.$invalid && !addItemForm.$pristine" class="bg-warning">An item name is required</p>
-    <p ng-show="$ctrl.editItem && editItemForm.$invalid && !editItemForm.$pristine" class="bg-warning">An item name is required</p>
-    <p ng-show="$ctrl.success" class="bg-success">Success!</p>
-    <p ng-show="$ctrl.error" class="bg-danger">Error! {{$ctrl.statusMessage}}</p>
+	<p
+		ng-show="$ctrl.addItem && addItemForm.$invalid && !addItemForm.$pristine"
+		class="bg-warning"
+	>
+		An item name is required
+	</p>
+
+	<p
+		ng-show="$ctrl.editItem && editItemForm.$invalid && !editItemForm.$pristine"
+		class="bg-warning"
+	>
+		An item name is required
+	</p>
+
+	<p
+		ng-show="$ctrl.success"
+		class="bg-success"
+	>
+		Success!
+	</p>
+
+	<p
+		ng-show="$ctrl.error"
+		class="bg-danger"
+	>
+		Error! {{ $ctrl.statusMessage }}
+	</p>
 </div>
 
 <div class="row">
     <div class="col-xs-12 col-md-6">
         <ul ng-repeat="item in $ctrl.items">
-            <li>{{item.name}} <button class="btn btn-info btn-xs" ng-click="$ctrl.editItem = !$ctrl.editItem; $ctrl.putForm = item; $ctrl.addItem = false;">Edit</button> <button class="btn btn-danger btn-xs" ng-click="$ctrl.removeItem(item._id)">Delete</button></li>
+            <li>
+				{{ item.name }}
+
+				<button
+					class="btn btn-info btn-xs"
+					ng-click="$ctrl.editItem = !$ctrl.editItem; $ctrl.putForm = item; $ctrl.addItem = false;"
+				>
+					Edit
+				</button>
+
+				<button
+					class="btn btn-danger btn-xs"
+					ng-click="$ctrl.removeItem(item._id)"
+				>
+					Delete
+				</button>
+			</li>
+
             <ul ng-if="item.notes">
-                <li>{{item.notes}}</li>
+                <li>{{ item.notes }}</li>
             </ul>
         </ul>
 
-        <button class="btn btn-success" ng-click="$ctrl.addItem = !$ctrl.addItem; $ctrl.editItem = false;">Add Item</button>
+		<button
+			class="btn btn-success"
+			ng-click="$ctrl.addItem = !$ctrl.addItem; $ctrl.editItem = false;"
+		>
+			Add Item
+		</button>
     </div>
 
     <div class="col-xs-12 col-md-6">
-        <form ng-show="$ctrl.addItem" name="addItemForm" ng-submit="$ctrl.insertItem(addItemForm.$valid)" novalidate>
+		<form
+			ng-show="$ctrl.addItem"
+			name="addItemForm"
+			novalidate
+			ng-submit="$ctrl.insertItem(addItemForm.$valid)"
+		>
             <div class="form-group">
                 <label for="insertItemName">Item Name</label>
-                <input type="text" ng-model="$ctrl.insertForm.name" class="form-control" id="insertItemName" name="insertItemName" placeholder="Item" required />
-            </div>
+				<input
+					id="insertItemName"
+					ng-model="$ctrl.insertForm.name"
+					class="form-control"
+					name="insertItemName"
+					placeholder="Item"
+					required
+					type="text"
+				/>
+			</div>
+
             <div class="form-group">
                 <label for="insertNotes">Notes</label>
-                <input type="text" ng-model="$ctrl.insertForm.notes" class="form-control" id="insertNotes" name="insertNotes" placeholder="Notes" />
-            </div>
-            <button type="submit" class="btn btn-success">Add</button>
+				<input
+					id="insertNotes"
+					ng-model="$ctrl.insertForm.notes"
+					class="form-control"
+					name="insertNotes"
+					placeholder="Notes"
+					type="text"
+				/>
+			</div>
+
+			<button
+				class="btn btn-success"
+				type="submit"
+			>
+				Add
+			</button>
         </form>
 
-        <form ng-show="$ctrl.editItem" name="editItemForm" ng-submit="$ctrl.putItem(editItemForm.$valid)">
+		<form
+			ng-show="$ctrl.editItem"
+			name="editItemForm"
+			ng-submit="$ctrl.putItem(editItemForm.$valid)"
+		>
             <div class="form-group">
                 <label for="putItemName">Item Name</label>
-                <input type="text" ng-model="$ctrl.putForm.name" class="form-control" id="putItemName" name="putItemName" placeholder="Item" required />
-            </div>
+				<input
+					id="putItemName"
+					ng-model="$ctrl.putForm.name"
+					class="form-control"
+					name="putItemName"
+					placeholder="Item"
+					required
+					type="text"
+				/>
+			</div>
+
             <div class="form-group">
                 <label for="putNotes">Notes</label>
-                <input type="text" ng-model="$ctrl.putForm.notes" class="form-control" id="putNotes" name="putNotes" placeholder="Notes" />
-            </div>
-            <button type="submit" class="btn btn-info">Update</button>
+				<input
+					id="putNotes"
+					ng-model="$ctrl.putForm.notes"
+					class="form-control"
+					name="putNotes"
+					placeholder="Notes"
+					type="text"
+				/>
+			</div>
+
+			<button
+				class="btn btn-info"
+				type="submit"
+			>
+				Update
+			</button>
         </form>
     </div>
 </div>
