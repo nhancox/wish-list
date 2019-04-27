@@ -1,27 +1,47 @@
 {
-  "name": "wish-list",
-  "version": "1.0.0",
-  "description": "A simple wish list app",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Nicholas Hancox",
-  "license": "ISC",
-  "dependencies": {
-    "angular": "1.6.10",
-    "angular-ui-router": "0.3.2",
-    "body-parser": "^1.19.0",
-    "bootstrap": "^3.4.1",
-    "cookie-parser": "^1.4.4",
-    "dotenv": "^7.0.0",
-    "express": "^4.16.4",
-    "jquery": "^3.4.0",
-    "mongodb": "^2.2.30",
-    "mongoose": "^4.11.3"
-  },
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1"
-  }
+	"name": "wish-list",
+	"version": "1.0.0",
+	"description": "A simple wish list app",
+	"main": "server.js",
+	"scripts": {
+		"lint": "eslint"
+	},
+	"author": "Nicholas Hancox",
+	"license": "ISC",
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.js": [
+			"eslint --fix"
+		]
+	},
+	"dependencies": {
+		"angular": "1.6.10",
+		"angular-ui-router": "0.3.2",
+		"body-parser": "^1.19.0",
+		"bootstrap": "^3.4.1",
+		"cookie-parser": "^1.4.4",
+		"dotenv": "^7.0.0",
+		"express": "^4.16.4",
+		"jquery": "^3.4.0",
+		"mongodb": "^2.2.30",
+		"mongoose": "^4.11.3"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.4.4",
+		"@babel/preset-env": "^7.4.4",
+		"babel-eslint": "^10.0.1",
+		"eslint": "^5.16.0",
+		"eslint-config-prettier": "^4.2.0",
+		"eslint-plugin-prettier": "^3.0.1",
+		"gulp": "^3.9.1",
+		"gulp-babel": "^8.0.0-beta.2",
+		"gulp-concat": "^2.6.1",
+		"husky": "^2.1.0",
+		"lint-staged": "^8.1.5",
+		"prettier": "^1.17.0"
+	}
 }
