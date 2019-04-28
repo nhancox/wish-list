@@ -1,7 +1,12 @@
-const gulp = require("gulp");
-const concat = require("gulp-concat");
+const fs = require("fs");
+const util = require("util");
 
-const source = {
+const { dest, parallel, series, src, watch } = require("gulp");
+const babel = require("gulp-babel");
+const concat = require("gulp-concat");
+const uglify = require("gulp-uglify");
+
+const SOURCE = {
 	js: {
 		app: [
 			"client/modules/main.js",
@@ -17,27 +22,44 @@ const source = {
 		]
 	}
 };
-const destination = "client/build";
+const DESTINATION = "client/build";
 
-gulp.task("app.js", () => {
-	return gulp
-		.src(source.js.app)
+module.exports.build = series(clean, parallel(buildAppJS, buildVendorJS));
+module.exports.clean = clean;
+module.exports.watch = watchAppJS;
+
+function buildAppJS() {
+	return src(SOURCE.js.app, { sourcemaps: false })
+		.pipe(babel())
 		.pipe(concat("app.js"))
-		.pipe(gulp.dest(destination));
-});
+		.pipe(dest(DESTINATION))
+		.pipe(uglify())
+		.pipe(dest(DESTINATION));
+}
 
-gulp.task("vendor.js", () => {
-	return gulp
-		.src(source.js.vendor)
+function buildVendorJS() {
+	return src(SOURCE.js.app, { sourcemaps: false })
+		.pipe(babel())
 		.pipe(concat("vendor.js"))
-		.pipe(gulp.dest(destination));
-});
+		.pipe(dest(DESTINATION))
+		.pipe(uglify())
+		.pipe(dest(DESTINATION));
+}
 
-gulp.task("default", ["app.js", "vendor.js"]);
+async function clean() {
+	const files = await util.promisify(fs.readdir)(DESTINATION);
 
-const appWatcher = gulp.watch(source.js.app, ["app.js"]);
-appWatcher.on("change", (event) => {
-	// Print to console to help monitor watch process
-	// eslint-disable-next-line
-	console.log(`File ${event.path} was ${event.type}, running tasks…`);
-});
+	if (!files.length) {
+		return;
+	}
+
+	for (let file of files) {
+		await util.promisify(fs.unlink)(`${DESTINATION}/${file}`);
+	}
+
+	return;
+}
+
+function watchAppJS() {
+	return watch(SOURCE.js.app, { event: "any" }, buildAppJS);
+}

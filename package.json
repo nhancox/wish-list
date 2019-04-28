@@ -4,7 +4,12 @@
 	"description": "A simple wish list app",
 	"main": "server.js",
 	"scripts": {
-		"lint": "eslint"
+		"build": "gulp build",
+		"clean": "gulp clean",
+		"dev": "gulp build && gulp watch",
+		"lint": "eslint",
+		"start": "node server.js",
+		"watch": "gulp watch"
 	},
 	"author": "Nicholas Hancox",
 	"license": "ISC",
@@ -36,9 +41,10 @@
 		"eslint": "^5.16.0",
 		"eslint-config-prettier": "^4.2.0",
 		"eslint-plugin-prettier": "^3.0.1",
-		"gulp": "^3.9.1",
-		"gulp-babel": "^8.0.0-beta.2",
+		"gulp": "^4.0.1",
+		"gulp-babel": "^8.0.0",
 		"gulp-concat": "^2.6.1",
+		"gulp-uglify": "^3.0.2",
 		"husky": "^2.1.0",
 		"lint-staged": "^8.1.5",
 		"prettier": "^1.17.0"
