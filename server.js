@@ -13,14 +13,9 @@ const PORT = process.env.PORT;
 
 const app = express();
 
-mongoose.Promise = global.Promise;
 mongoose.connect(MONGO_CONNECTION, {
-	useMongoClient: true
-});
-process.on("SIGINT", () => {
-	mongoose.connection.close(() => {
-		process.exit(0);
-	});
+	useFindAndModify: false,
+	useNewUrlParser: true
 });
 
 app.use(bodyParser.json());
