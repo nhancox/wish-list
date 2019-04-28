@@ -38,7 +38,7 @@ function buildAppJS() {
 }
 
 function buildVendorJS() {
-	return src(SOURCE.js.app, { sourcemaps: false })
+	return src(SOURCE.js.vendor, { sourcemaps: false })
 		.pipe(babel())
 		.pipe(concat("vendor.js"))
 		.pipe(dest(DESTINATION))
