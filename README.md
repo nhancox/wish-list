@@ -6,6 +6,8 @@ This project is currently being upgraded for v2.0.0. My intention is purely to
 add a certain level of polish that is more inline with my current standards. Do
 not consider any non-tagged commits to be fully-tested.
 
+Project is currently functional. Only the front-end update remains.
+
 ## Description
 
 This project is a simple wish list implemented with the MEAN stack.
