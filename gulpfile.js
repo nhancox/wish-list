@@ -47,6 +47,10 @@ function buildVendorJS() {
 }
 
 async function clean() {
+	if (!fs.existsSync(DESTINATION)) {
+		await util.promisify(fs.mkdir)(DESTINATION);
+	}
+
 	const files = await util.promisify(fs.readdir)(DESTINATION);
 
 	if (!files.length) {
