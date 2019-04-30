@@ -49,6 +49,7 @@ function buildVendorJS() {
 async function clean() {
 	if (!fs.existsSync(DESTINATION)) {
 		await util.promisify(fs.mkdir)(DESTINATION);
+		return;
 	}
 
 	const files = await util.promisify(fs.readdir)(DESTINATION);
