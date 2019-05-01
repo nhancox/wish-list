@@ -12,7 +12,7 @@ const uglify = require("gulp-uglify");
 
 const SOURCE = {
 	css: {
-		app: [],
+		app: ["client/modules/app.css"],
 		vendor: ["node_modules/bootstrap/dist/css/bootstrap.min.css"]
 	},
 	js: {
@@ -36,12 +36,20 @@ const DESTINATION_SUFFIXES = {
 	js: `js`
 };
 
-module.exports.build = series(
-	clean,
-	parallel(buildVendorCSS, buildAppJS, buildVendorJS)
-);
+const buildCSS = parallel(buildAppCSS, buildVendorCSS);
+const buildJS = parallel(buildAppJS, buildVendorJS);
+
+module.exports.build = series(clean, parallel(buildCSS, buildJS));
 module.exports.clean = clean;
-module.exports.watch = watchAppJS;
+module.exports.watch = parallel(watchAppCSS, watchAppJS);
+
+function buildAppCSS() {
+	const destination = join(DESTINATION_PREFIX, DESTINATION_SUFFIXES.css);
+	return src(SOURCE.css.app)
+		.pipe(concat("app.css"))
+		.pipe(cleanCSS())
+		.pipe(dest(destination));
+}
 
 function buildVendorCSS() {
 	const destination = join(DESTINATION_PREFIX, DESTINATION_SUFFIXES.css);
@@ -82,6 +90,10 @@ async function clean() {
 	);
 	await Promise.all(subdirectories);
 	return;
+}
+
+function watchAppCSS() {
+	return watch(SOURCE.css.app, { event: "any" }, buildAppCSS);
 }
 
 function watchAppJS() {
