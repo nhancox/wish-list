@@ -1,12 +1,20 @@
 const fs = require("fs");
-const util = require("util");
+const { join } = require("path");
+const { promisify } = require("util");
+
+const del = require("del");
 
 const { dest, parallel, series, src, watch } = require("gulp");
 const babel = require("gulp-babel");
+const cleanCSS = require("gulp-clean-css");
 const concat = require("gulp-concat");
 const uglify = require("gulp-uglify");
 
 const SOURCE = {
+	css: {
+		app: [],
+		vendor: ["node_modules/bootstrap/dist/css/bootstrap.min.css"]
+	},
 	js: {
 		app: [
 			"client/modules/main.js",
@@ -22,46 +30,57 @@ const SOURCE = {
 		]
 	}
 };
-const DESTINATION = "client/build";
+const DESTINATION_PREFIX = "client/build";
+const DESTINATION_SUFFIXES = {
+	css: `css`,
+	js: `js`
+};
 
-module.exports.build = series(clean, parallel(buildAppJS, buildVendorJS));
+module.exports.build = series(
+	clean,
+	parallel(buildVendorCSS, buildAppJS, buildVendorJS)
+);
 module.exports.clean = clean;
 module.exports.watch = watchAppJS;
 
+function buildVendorCSS() {
+	const destination = join(DESTINATION_PREFIX, DESTINATION_SUFFIXES.css);
+	return src(SOURCE.css.vendor)
+		.pipe(concat("vendor.css"))
+		.pipe(cleanCSS())
+		.pipe(dest(destination));
+}
+
 function buildAppJS() {
+	const destination = join(DESTINATION_PREFIX, DESTINATION_SUFFIXES.js);
 	return src(SOURCE.js.app, { sourcemaps: false })
 		.pipe(babel())
 		.pipe(concat("app.js"))
-		.pipe(dest(DESTINATION))
+		.pipe(dest(destination))
 		.pipe(uglify())
-		.pipe(dest(DESTINATION));
+		.pipe(dest(destination));
 }
 
 function buildVendorJS() {
+	const destination = join(DESTINATION_PREFIX, DESTINATION_SUFFIXES.js);
 	return src(SOURCE.js.vendor, { sourcemaps: false })
 		.pipe(babel())
 		.pipe(concat("vendor.js"))
-		.pipe(dest(DESTINATION))
+		.pipe(dest(destination))
 		.pipe(uglify())
-		.pipe(dest(DESTINATION));
+		.pipe(dest(destination));
 }
 
 async function clean() {
-	if (!fs.existsSync(DESTINATION)) {
-		await util.promisify(fs.mkdir)(DESTINATION);
-		return;
-	}
-
-	const files = await util.promisify(fs.readdir)(DESTINATION);
-
-	if (!files.length) {
-		return;
-	}
-
-	for (let file of files) {
-		await util.promisify(fs.unlink)(`${DESTINATION}/${file}`);
-	}
-
+	await del(DESTINATION_PREFIX);
+	await promisify(fs.mkdir)(DESTINATION_PREFIX);
+	const subdirectories = Object.values(DESTINATION_SUFFIXES).map(
+		async (suffix) => {
+			await promisify(fs.mkdir)(join(DESTINATION_PREFIX, suffix));
+			return;
+		}
+	);
+	await Promise.all(subdirectories);
 	return;
 }
 

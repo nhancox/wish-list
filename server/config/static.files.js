@@ -15,22 +15,5 @@ app.use(
 	})
 );
 
-app.use(
-	"/bootstrap-css",
-	express.static("node_modules/bootstrap/dist/css/bootstrap.min.css", {
-		fallthrough: false
-	})
-);
-
-app.use(
-	"/app-js",
-	express.static("client/build/app.js", {
-		fallthrough: false
-	})
-);
-app.use(
-	"/vendor-js",
-	express.static("client/build/vendor.js", {
-		fallthrough: false
-	})
-);
+app.use("/css", express.static("client/build/css"));
+app.use("/js", express.static("client/build/js"));
