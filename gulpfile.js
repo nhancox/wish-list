@@ -16,6 +16,9 @@ const SOURCE = {
 		app: ["client/modules/app.css"],
 		vendor: ["node_modules/bootstrap/dist/css/bootstrap.min.css"]
 	},
+	fonts: {
+		vendor: "node_modules/bootstrap/dist/fonts"
+	},
 	js: {
 		app: [
 			"client/modules/main.js",
@@ -33,13 +36,15 @@ const SOURCE = {
 };
 const DESTINATION_PREFIX = "client/build";
 const DESTINATION_SUFFIXES = {
-	css: `css`,
-	js: `js`
+	css: "css",
+	fonts: "fonts",
+	js: "js"
 };
 
 const buildCSS = parallel(buildAppCSS, buildVendorCSS);
+const buildFonts = buildVendorFonts;
 const buildJS = parallel(buildAppJS, buildVendorJS);
-const buildAll = parallel(buildCSS, buildJS);
+const buildAll = parallel(buildCSS, buildFonts, buildJS);
 const watchAll = parallel(watchAppCSS, watchAppJS);
 
 const buildTask = series(clean, buildAll);
@@ -54,6 +59,19 @@ function buildAppCSS() {
 		.pipe(concat("app.css"))
 		.pipe(cleanCSS())
 		.pipe(dest(destination));
+}
+
+async function buildVendorFonts() {
+	const destination = join(DESTINATION_PREFIX, DESTINATION_SUFFIXES.fonts);
+	const fonts = await promisify(fs.readdir)(SOURCE.fonts.vendor);
+
+	for (let font of fonts) {
+		const sourceFile = join(SOURCE.fonts.vendor, font);
+		const destinationFile = join(destination, font);
+		await promisify(fs.copyFile)(sourceFile, destinationFile);
+	}
+
+	return;
 }
 
 function buildVendorCSS() {
