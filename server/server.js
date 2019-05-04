@@ -13,10 +13,16 @@ const PORT = process.env.PORT;
 
 const app = express();
 
-mongoose.connect(MONGO_CONNECTION, {
-	useFindAndModify: false,
-	useNewUrlParser: true
-});
+mongoose
+	.connect(MONGO_CONNECTION, {
+		useFindAndModify: false,
+		useNewUrlParser: true
+	})
+	.catch((err) => {
+		// eslint-disable-next-line
+		console.error(`Unable to connect to Mongo database: ${err}`);
+		process.exit(1);
+	});
 
 app.use(bodyParser.json());
 app.use(
@@ -25,8 +31,8 @@ app.use(
 	})
 );
 
-app.use(require("./server/config/static.files"));
-app.use(require("./server/routes"));
+app.use(require("./config/static.files"));
+app.use(require("./routes"));
 app.use((req, res) => {
 	res.sendStatus(404);
 });
