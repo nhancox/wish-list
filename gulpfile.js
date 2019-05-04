@@ -8,6 +8,7 @@ const { dest, parallel, series, src, watch } = require("gulp");
 const babel = require("gulp-babel");
 const cleanCSS = require("gulp-clean-css");
 const concat = require("gulp-concat");
+const nodemon = require("gulp-nodemon");
 const uglify = require("gulp-uglify");
 
 const SOURCE = {
@@ -38,10 +39,14 @@ const DESTINATION_SUFFIXES = {
 
 const buildCSS = parallel(buildAppCSS, buildVendorCSS);
 const buildJS = parallel(buildAppJS, buildVendorJS);
+const buildAll = parallel(buildCSS, buildJS);
+const watchAll = parallel(watchAppCSS, watchAppJS);
 
-module.exports.build = series(clean, parallel(buildCSS, buildJS));
+const buildTask = series(clean, buildAll);
+
+module.exports.build = buildTask;
 module.exports.clean = clean;
-module.exports.watch = parallel(watchAppCSS, watchAppJS);
+module.exports.dev = series(buildTask, parallel(nodemonServer, watchAll));
 
 function buildAppCSS() {
 	const destination = join(DESTINATION_PREFIX, DESTINATION_SUFFIXES.css);
@@ -90,6 +95,16 @@ async function clean() {
 	);
 	await Promise.all(subdirectories);
 	return;
+}
+
+function nodemonServer(callback) {
+	let started = false;
+	return nodemon({ script: "server/server.js" }).on("start", () => {
+		if (!started) {
+			started = true;
+			callback();
+		}
+	});
 }
 
 function watchAppCSS() {

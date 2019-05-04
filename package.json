@@ -4,14 +4,13 @@
 	"author": "Nicholas Hancox",
 	"description": "A simple wish list app",
 	"private": true,
-	"main": "server.js",
+	"main": "server/server.js",
 	"scripts": {
 		"build": "gulp build",
 		"clean": "gulp clean",
-		"dev": "gulp build && gulp watch",
+		"dev": "gulp dev",
 		"lint": "eslint",
-		"start": "node server.js",
-		"watch": "gulp watch"
+		"start": "node server/server.js"
 	},
 	"husky": {
 		"hooks": {
@@ -50,6 +49,7 @@
 		"gulp-babel": "^8.0.0",
 		"gulp-clean-css": "^4.2.0",
 		"gulp-concat": "^2.6.1",
+		"gulp-nodemon": "^2.4.2",
 		"gulp-uglify": "^3.0.2",
 		"husky": "^2.1.0",
 		"lint-staged": "^8.1.5",
