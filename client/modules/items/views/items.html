@@ -1,148 +1,248 @@
-<div class="row">
-    <h1>Wish List</h1>
-    <h6>Items in wish list: {{ $ctrl.items.length }}</h6>
-</div>
+<main
+	id="wish-list"
+	class="center-block"
+>
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<p>Items in wish list: <strong>{{ $ctrl.items.length }}</strong></p>
+		</div>
+	</div>
 
-<div class="row">
-	<p
-		ng-show="$ctrl.addItem && addItemForm.$invalid && !addItemForm.$pristine"
-		class="bg-warning"
-	>
-		An item name is required
-	</p>
+	<div class="row">
+		<div class="col-xs-12 item-list">
+			<div
+				class="row"
+				ng-repeat="item in $ctrl.items"
+			>
+				<div class="col-xs-12">
+					<p>
+						<strong>{{ item.name }}</strong>
 
-	<p
-		ng-show="$ctrl.editItem && editItemForm.$invalid && !editItemForm.$pristine"
-		class="bg-warning"
-	>
-		An item name is required
-	</p>
+						<span class="item-buttons">
+							<button
+								ng-disabled="$ctrl.saving"
+								class="btn btn-info btn-xs"
+								type="button"
+								ng-click="$ctrl.togglePutForm(item)"
+							>
+								<span
+									aria-hidden="true"
+									class="glyphicon glyphicon-pencil"
+								></span>
+							</button>
 
-	<p
-		ng-show="$ctrl.success"
-		class="bg-success"
-	>
-		Success!
-	</p>
+							<button
+								ng-disabled="$ctrl.saving"
+								class="btn btn-danger btn-xs"
+								type="button"
+								ng-click="$ctrl.removeItem(item._id)"
+							>
+								<span
+									aria-hidden="true"
+									class="glyphicon glyphicon-trash"
+								></span>
+							</button>
+						</span>
+					</p>
 
-	<p
-		ng-show="$ctrl.error"
-		class="bg-danger"
-	>
-		Error! {{ $ctrl.statusMessage }}
-	</p>
-</div>
+					<p ng-if="item.notes">
+						{{ item.notes }}
+					</p>
+				</div>
+			</div>
 
-<div class="row">
-    <div class="col-xs-12 col-md-6">
-        <ul ng-repeat="item in $ctrl.items">
-            <li>
-				{{ item.name }}
+			<div class="row">
+				<div class="col-xs-12">
+					<button
+						ng-disabled="$ctrl.saving"
+						class="btn btn-success pull-right"
+						type="button"
+						ng-click="
+							$ctrl.addItem = !$ctrl.addItem;
+							$ctrl.editItem = false;
+							$ctrl.resetForms();
+						"
+					>
+						New
+					</button>
+				</div>
+			</div>
+		</div>
 
+		<div class="col-xs-12">
+			<div
+				ng-show="
+					$ctrl.addItem &&
+					addItemForm.$invalid &&
+					!addItemForm.$pristine
+				"
+				class="alert alert-warning"
+				role="alert"
+			>
+				An item name is required
+			</div>
+
+			<div
+				ng-show="
+					$ctrl.editItem &&
+					editItemForm.$invalid &&
+					!editItemForm.$pristine
+				"
+				class="alert alert-warning"
+				role="alert"
+			>
+				An item name is required
+			</div>
+
+			<div
+				ng-show="$ctrl.success"
+				class="alert alert-success"
+				role="alert"
+			>
+				<strong>Success!</strong>
+			</div>
+
+			<div
+				ng-show="$ctrl.error"
+				class="alert alert-danger alert-dismissible"
+				role="alert"
+			>
 				<button
-					class="btn btn-info btn-xs"
-					ng-click="$ctrl.editItem = !$ctrl.editItem; $ctrl.putForm = item; $ctrl.addItem = false;"
+					aria-label="close"
+					class="close"
+					data-dismiss="alert"
+					type="button"
 				>
-					Edit
+					<span aria-hidden="true">&times;</span>
 				</button>
 
-				<button
-					class="btn btn-danger btn-xs"
-					ng-click="$ctrl.removeItem(item._id)"
-				>
-					Delete
-				</button>
-			</li>
-
-            <ul ng-if="item.notes">
-                <li>{{ item.notes }}</li>
-            </ul>
-        </ul>
-
-		<button
-			class="btn btn-success"
-			ng-click="$ctrl.addItem = !$ctrl.addItem; $ctrl.editItem = false;"
-		>
-			Add Item
-		</button>
-    </div>
-
-    <div class="col-xs-12 col-md-6">
-		<form
-			ng-show="$ctrl.addItem"
-			name="addItemForm"
-			novalidate
-			ng-submit="$ctrl.insertItem(addItemForm.$valid)"
-		>
-            <div class="form-group">
-                <label for="insertItemName">Item Name</label>
-				<input
-					id="insertItemName"
-					ng-model="$ctrl.insertForm.name"
-					class="form-control"
-					name="insertItemName"
-					placeholder="Item"
-					required
-					type="text"
-				/>
+				<strong>Error!</strong> {{ $ctrl.statusMessage }}
 			</div>
+		</div>
 
-            <div class="form-group">
-                <label for="insertNotes">Notes</label>
-				<input
-					id="insertNotes"
-					ng-model="$ctrl.insertForm.notes"
-					class="form-control"
-					name="insertNotes"
-					placeholder="Notes"
-					type="text"
-				/>
-			</div>
-
-			<button
-				class="btn btn-success"
-				type="submit"
+		<div class="col-xs-12">
+			<form
+				ng-show="$ctrl.addItem"
+				name="addItemForm"
+				novalidate
+				ng-submit="$ctrl.insertItem(addItemForm.$valid)"
 			>
-				Add
-			</button>
-        </form>
+				<div class="form-group">
+					<label for="insertItemName">Item Name</label>
+					<input
+						id="insertItemName"
+						ng-model="$ctrl.insertForm.name"
+						class="form-control"
+						name="insertItemName"
+						placeholder="Item"
+						required
+						type="text"
+					/>
+				</div>
 
-		<form
-			ng-show="$ctrl.editItem"
-			name="editItemForm"
-			ng-submit="$ctrl.putItem(editItemForm.$valid)"
-		>
-            <div class="form-group">
-                <label for="putItemName">Item Name</label>
-				<input
-					id="putItemName"
-					ng-model="$ctrl.putForm.name"
-					class="form-control"
-					name="putItemName"
-					placeholder="Item"
-					required
-					type="text"
-				/>
-			</div>
+				<div class="form-group">
+					<label for="insertNotes">Notes</label>
+					<input
+						id="insertNotes"
+						ng-model="$ctrl.insertForm.notes"
+						class="form-control"
+						name="insertNotes"
+						placeholder="Notes"
+						type="text"
+					/>
+				</div>
 
-            <div class="form-group">
-                <label for="putNotes">Notes</label>
-				<input
-					id="putNotes"
-					ng-model="$ctrl.putForm.notes"
-					class="form-control"
-					name="putNotes"
-					placeholder="Notes"
-					type="text"
-				/>
-			</div>
+				<div class="form-group pull-right">
+					<button
+						ng-disabled="$ctrl.saving"
+						class="btn btn-secondary"
+						type="button"
+						ng-click="
+							$ctrl.addItem = false;
+							$ctrl.resetForms();
+						"
+					>
+						Cancel
+					</button>
 
-			<button
-				class="btn btn-info"
-				type="submit"
+					<button
+						ng-disabled="$ctrl.saving"
+						class="btn btn-success"
+						type="submit"
+					>
+						<span ng-show="!$ctrl.saving">
+							Add
+						</span>
+
+						<span
+							ng-show="$ctrl.saving"
+							aria-hidden="true"
+							class="glyphicon glyphicon-hourglass"
+						></span>
+					</button>
+				</div>
+			</form>
+
+			<form
+				ng-show="$ctrl.editItem"
+				name="editItemForm"
+				ng-submit="$ctrl.putItem(editItemForm.$valid)"
 			>
-				Update
-			</button>
-        </form>
-    </div>
-</div>
+				<div class="form-group">
+					<label for="putItemName">Item Name</label>
+					<input
+						id="putItemName"
+						ng-model="$ctrl.putForm.name"
+						class="form-control"
+						name="putItemName"
+						placeholder="Item"
+						required
+						type="text"
+					/>
+				</div>
+
+				<div class="form-group">
+					<label for="putNotes">Notes</label>
+					<input
+						id="putNotes"
+						ng-model="$ctrl.putForm.notes"
+						class="form-control"
+						name="putNotes"
+						placeholder="Notes"
+						type="text"
+					/>
+				</div>
+
+				<div class="form-group pull-right">
+					<button
+						ng-disabled="$ctrl.saving"
+						class="btn btn-secondary"
+						type="button"
+						ng-click="
+							$ctrl.editItem = false;
+							$ctrl.resetForms();
+						"
+					>
+						Cancel
+					</button>
+
+					<button
+						ng-disabled="$ctrl.saving"
+						class="btn btn-info"
+						type="submit"
+					>
+						<span ng-show="!$ctrl.saving">
+							Update
+						</span>
+
+						<span
+							ng-show="$ctrl.saving"
+							aria-hidden="true"
+							class="glyphicon glyphicon-hourglass"
+						></span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</main>
