@@ -11,15 +11,12 @@ body {
 	background-color: #478AC1;
 }
 
-.navbar-header {
-	float: left;
-	padding: 15px;
-	text-align: center;
-	width: 100%;
-}
-
-.navbar-brand {
+.navbar .navbar-header {
+	display: inline-block;
 	float: none;
+	padding-left: 0;
+	padding-right: 0;
+	vertical-align: top;
 }
 
 #brand {
