@@ -20,7 +20,7 @@ configuration file has been exposed in the repo (`wish-list` follows the
 compiled build files and various editor- and OS-specific files are in
 `.gitignore`.
 
-All technologies used:
+Basic technology summary:
 
 * JavaScript (~ES8)
 * Node.js (v8 LTS)
