@@ -36,6 +36,8 @@ This project was first started with AngularJS 1.6 and Bootstrap 3, so they were
 kept in place for the updated v2.0.0. Combined with Babel transpilation, this
 also enables greater browser compatibility than newer frameworks.
 
+No further updates are planned for this project.
+
 ## Conventions
 
 Standard ESLint configuration and a slightly modified Prettier (use tabs and
