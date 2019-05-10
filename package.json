@@ -2,6 +2,7 @@
 	"name": "wish-list",
 	"version": "1.0.0",
 	"author": "Nicholas Hancox",
+	"license": "MIT",
 	"description": "A simple wish list app",
 	"private": true,
 	"main": "server/server.js",
